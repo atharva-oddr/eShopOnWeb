@@ -32,7 +32,7 @@ stages:
             inputs:
               targetType: 'inline'
               script: |
-                docker save $(repo):$(commitHash) -o $(Build.ArtifactStagingDirectory)/$(repo)_$(commitHash).tar
+                docker save $(repo):$(commitHash) -o $(Build.ArtifactStagingDirectory)/image_$(commitHash).tar
           - task: PublishBuildArtifacts@1
             displayName: 'Publish Artifact'
             inputs:
@@ -64,7 +64,7 @@ stages:
             inputs:
               targetType: 'inline'
               script: |
-                docker save $(repo):$(commitHash) -o $(Build.ArtifactStagingDirectory)/$(repo)_$(commitHash).tar
+                docker save $(repo):$(commitHash) -o $(Build.ArtifactStagingDirectory)/image_$(commitHash).tar
           - task: PublishBuildArtifacts@1
             displayName: 'Publish Artifact'
             inputs:
