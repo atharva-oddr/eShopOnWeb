@@ -43,28 +43,25 @@ stages:
     displayName: 'Deploy to development'
     dependsOn: Build
     jobs:
-      - deployment: Deploy_Web
+      - job: Deploy_Web
         displayName: 'Deploy Web'
         # environment: 'development'
-        strategy:
-          runOnce:
-            deploy:
-              steps:
-                - download: current
-                - task: Bash@3
-                  displayName: Save Docker Image
-                  inputs:
-                    targetType: 'inline'
-                    script: |
-                      docker load -i $(Pipeline.Workspace)/current/image_$(commitHash).tar
-                      docker tag $(repo):$(commitHash) acr_name/$(repo):latest
-                - task: Bash@3
-                  displayName: 'deploy'
-                  inputs:
-                    targetType: 'inline'
-                    script: |
-                      echo 'docker push acr_name/$(repo):latest'
-                      docker images
+        steps:
+          - download: current
+          - task: Bash@3
+            displayName: Save Docker Image
+            inputs:
+              targetType: 'inline'
+              script: |
+                docker load -i $(Pipeline.Workspace)/current/image_$(commitHash).tar
+                docker tag $(repo):$(commitHash) acr_name/$(repo):latest
+          - task: Bash@3
+            displayName: 'deploy'
+            inputs:
+              targetType: 'inline'
+              script: |
+                echo 'docker push acr_name/$(repo):latest'
+                docker images
                       
 
                 
